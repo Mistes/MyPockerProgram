@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="2628756471">
+  <component name="DataSourceManagerImpl" format="xml" hash="2393371613">
     <data-source source="LOCAL" name="MySQL - mypockerbase@db4free.net" uuid="3841a880-b059-4814-90de-b71b88a2b2ef">
       <driver-ref>mysql</driver-ref>
       <synchronize>true</synchronize>
@@ -14,6 +14,7 @@
         <property name="characterSetResults" value="utf8" />
         <property name="yearIsDateType" value="false" />
       </driver-properties>
+      <libraries />
     </data-source>
   </component>
 </project>

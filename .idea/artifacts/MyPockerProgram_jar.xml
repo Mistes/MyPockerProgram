@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="MyPockerProgram:jar">
+    <output-path>C:/</output-path>
+    <root id="archive" name="MyPockerProgram.jar">
+      <element id="module-output" name="MyPockerProgram" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.39/mysql-connector-java-5.1.39.jar" path-in-jar="/" />
+      <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.39" />
+    </root>
+  </artifact>
+</component>
