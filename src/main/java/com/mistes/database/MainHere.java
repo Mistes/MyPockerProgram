@@ -37,12 +37,19 @@ public class MainHere {
 
             Statement statement = worker.getConnection().createStatement();
             ResultSet resultSet =  statement.executeQuery(query);
-            while (resultSet.next()){
+            while (resultSet.next()){ //loading class
                 Pocker pocker = new Pocker();
+                JTextField textField = new JTextField(4);
+                JCheckBox checkBox = new JCheckBox();
+                JButton button = new JButton("impl");
                 pocker.setId(resultSet.getInt(1));
                 pocker.setName(resultSet.getString(3));
                 pocker.setCount(resultSet.getInt(2));
                 pocker.setGameNumber(resultSet.getInt(4));
+                checkBox.setSelected(resultSet.getBoolean(5));
+                pocker.setCheckBox(checkBox);
+                pocker.setTextField(textField);
+                pocker.setButton(button);
                 pockerUsers.add(pocker);
                 //  pocker.setCheckBox(new JCheckBox().setSelected(resultSet.getBoolean(5)));
                 //  s = pocker.toString();
@@ -55,7 +62,7 @@ public class MainHere {
         }catch (SQLException e){e.printStackTrace();}
     }
         public void go(){
-            JFrame theFrame = new JFrame("Cyber BeatBox");
+            JFrame theFrame = new JFrame("Pocker Helper");
             theFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             BorderLayout layout = new BorderLayout();
             JPanel background = new JPanel(layout);
@@ -63,17 +70,16 @@ public class MainHere {
             JPanel mainPanel = new JPanel();
             JPanel topPanel = new JPanel();
             JPanel downPanel = new JPanel();
+           // mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
            // JTextArea testing = new JTextArea(15,50);
            // testing.setLineWrap(true);
            // testing.setWrapStyleWord(true);
            // testing.setEditable(true);
 
-            for(int i = 0; i < pockerUsers.size(); i++) {
-                JLabel c = new JLabel();
-                c.setText(pockerUsers.get(i).toString());
-                jLabels.add(c);
-            }
+
+
+
 
 
             JLabel label = new JLabel("Add new player");
@@ -100,7 +106,21 @@ public class MainHere {
             JTextField newPlayer = new JTextField(20);
             JButton sendButton = new JButton("add");
             sendButton.addActionListener(e -> {try{
-               newPlayer.getText();
+                Pocker pocker = new Pocker(newPlayer.getText(), 500, 1, pockerUsers.size()+1);
+                pockerUsers.add(pocker);
+              //  labelsLoad(mainPanel,pockerUsers,jLabels);
+                JCheckBox checkBox = new JCheckBox();
+                mainPanel.add(checkBox);
+                JLabel j =  new JLabel();
+                 mainPanel.add(j);
+                j.setText(pocker.toString());
+                JTextField Jek = new JTextField(4);
+                JButton jeca = new JButton("Ins");
+
+                mainPanel.add(Jek);
+                mainPanel.add(jeca);
+
+
 
             }catch (Exception ed){ed.printStackTrace();}
                 newPlayer.setText("");
@@ -109,12 +129,13 @@ public class MainHere {
 
             topPanel.add(startGame);
             topPanel.add(countLabel);
-            for(int i = 0; i <jLabels.size(); i++){
-                mainPanel.add(jLabels.get(i));
-            }
+
+        labelsLoad(mainPanel,pockerUsers,jLabels);       //zagr middle
+
            // mainPanel.add(aScroller);
             downPanel.add(label);
             downPanel.add(newPlayer);
+            downPanel.add(sendButton);
             //  downPanel.setLayout(new BoxLayout(downPanel,BoxLayout.Y_AXIS));
 
             theFrame.getContentPane().add(BorderLayout.CENTER, mainPanel);
@@ -123,9 +144,30 @@ public class MainHere {
 
 
 
-            theFrame.setSize(700,400);
+            theFrame.setSize(600,400);
             theFrame.setVisible(true);
         }
+    public static void labelsLoad(JPanel mainpanel,ArrayList<Pocker>list,ArrayList<JLabel>jlabellist ){
+        for(int i = 0; i < pockerUsers.size(); i++) {
+            JLabel c = new JLabel();
+            c.setText(pockerUsers.get(i).toString());
+            jLabels.add(c);
+            mainpanel.add(pockerUsers.get(i).getCheckBox());
+           /* pockerUsers.get(i).getButton().getActionListeners(e -> {try{
+
+            pockerUsers.get(i)
+
+
+
+            }catch (Exception ed){ed.printStackTrace();}
+
+            });*/
+            mainpanel.add(jLabels.get(i));
+            mainpanel.add(pockerUsers.get(i).getTextField());
+        }
+
+
+    }
 
 
     }

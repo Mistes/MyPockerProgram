@@ -2,9 +2,7 @@ package com.mistes.database;
 
 import javax.swing.*;
 
-/**
- * Created by Администратор on 27.06.2016.
- */
+
 public class Pocker {
         private String name;
         private int count;
@@ -27,6 +25,14 @@ public class Pocker {
                 + ", gamenumber = " + gameNumber
                 + ", your score now is " + count;
 
+    }
+
+    public JButton getButton() {
+        return button;
+    }
+
+    public void setButton(JButton button) {
+        this.button = button;
     }
 
     public int getCount() {
@@ -61,17 +67,34 @@ public class Pocker {
         this.checkBox = checkBox;
     }
 
+    public JTextField getTextField() {
+        return textField;
+    }
+
+    public void setTextField(JTextField textField) {
+        this.textField = textField;
+    }
+
     public Pocker(String name, int count, int gameNumber, int id, JCheckBox checkBox, JTextField textField) {
         this.name = name;
         this.count = count;
         this.gameNumber = gameNumber;
         this.id = id;
         this.checkBox = checkBox;
+        this.button = button;
         this.textField = textField;
+    }
+    public Pocker(String name, int count, int gameNumber, int id){
+        this.name = name;
+        this.count = count;
+        this.gameNumber = gameNumber;
+        this.id = id;
+        this.button = button;
     }
 
         JCheckBox checkBox;
         JTextField textField;
+        JButton button;
 
     }
 
