@@ -84,13 +84,13 @@ public class Pocker {
         this.button = button;
         this.textField = textField;
     }
-    public Pocker(String name, int count, int gameNumber, int id){
-        this.name = name;
-        this.count = count;
-        this.gameNumber = gameNumber;
-        this.id = id;
-        this.button = button;
-    }
+  //  public Pocker(String name, int count, int gameNumber, int id){
+ //       this.name = name;
+    //    this.count = count;
+   //     this.gameNumber = gameNumber;
+   //     this.id = id;
+   //     this.button = button;
+  //  }
 
         JCheckBox checkBox;
         JTextField textField;

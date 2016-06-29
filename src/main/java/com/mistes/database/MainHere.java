@@ -9,9 +9,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-/**
- * Created by Администратор on 27.06.2016.
- */
+
 public class MainHere {
       private static int numberGame;
         // public static MainHere basic;
@@ -92,32 +90,13 @@ public class MainHere {
 
             JButton startGame = new JButton("Start this game");
             startGame.addActionListener(e -> {
-              countLabel.setText(startingNewGame(mainPanel));
+              countLabel.setText(startingNewGame());
 
             });
 
             JTextField newPlayer = new JTextField(20);
-            JButton sendButton = new JButton("add");
-            sendButton.addActionListener(e -> {try{
-                Pocker pocker = new Pocker(newPlayer.getText(), 500, 1, pockerUsers.size()+1);
-                pockerUsers.add(pocker);
-              //  labelsLoad(mainPanel,pockerUsers,jLabels);
-                JCheckBox checkBox = new JCheckBox();
-                mainPanel.add(checkBox);
-                JLabel j =  new JLabel();
-                 mainPanel.add(j);
-                j.setText(pocker.toString());
-                JTextField Jek = new JTextField(4);
-                JButton jeca = new JButton("Ins");
-
-                mainPanel.add(Jek);
-                mainPanel.add(jeca);
-
-
-
-            }catch (Exception ed){ed.printStackTrace();}
-                newPlayer.setText("");
-
+            JButton sendButton = new JButton("add");      //Adding new player
+            sendButton.addActionListener(e -> {addingNewPlayer(mainPanel,newPlayer);
             });
 
             topPanel.add(startGame);
@@ -157,9 +136,18 @@ public class MainHere {
             });*/
             mainpanel.add(jLabels.get(i));
             mainpanel.add(pockerUsers.get(i).getTextField());
+            JButton insertButton = new JButton("Ins");
+            mainpanel.add(insertButton);
+            insertButton.addActionListener(e -> {
+                int temps = Integer.parseInt(pockerUsers.get(i).getTextField().getText());
+                playerOfMyDreams.setCount(playerOfMyDreams.getCount()+temps);
+                j.setText(playerOfMyDreams.toString());
+                JtextField.setText("");
+
+            });
         }
        }
-   public static String startingNewGame(JPanel mainPanel){
+   public static String startingNewGame(){
        try{
 
            DBWorker worker = new DBWorker();
@@ -168,15 +156,58 @@ public class MainHere {
 
 
            for(int i = 0; i < pockerUsers.size(); i++){
-             int tempcount = pockerUsers.get(i).getCount();
-               pockerUsers.get(i).setCount(tempcount - 17);
+               if(pockerUsers.get(i).getCheckBox().isSelected()){
+                   int tempcount = (pockerUsers.get(i).getCount())-17;
+                   pockerUsers.get(i).setCount(tempcount);
+                   pockerUsers.get(i).setGameNumber(pockerUsers.get(i).getGameNumber()+1);
+                   jLabels.get(i).setText(pockerUsers.get(i).toString());
+               }
+
+
+               //statement.executeUpdate("UPDATE pocker SET count = pockerUsers.get(i).getCount()");   need to think how upoad at DataBase
            }
-           labelsLoad(mainPanel,pockerUsers,jLabels);
+
 
 
        }catch (Exception ed){ed.printStackTrace();}
        return "Game number is " + ++numberGame;
     }
+    public static void addingNewPlayer(JPanel mainPanel,JTextField newPlayer ){
+        try{
+            JCheckBox checkBox = new JCheckBox();
+            checkBox.isSelected();
+            if(newPlayer.getText().isEmpty()){throw new NullPointerException();}
+
+            mainPanel.add(checkBox);
+            JLabel j =  new JLabel();
+            mainPanel.add(j);
+            jLabels.add(j);
+
+            JTextField JtextField = new JTextField(4);
+            JButton ins= new JButton("Ins");
+
+            mainPanel.add(JtextField);
+            mainPanel.add(ins);
+
+            Pocker playerOfMyDreams = new Pocker(newPlayer.getText(), 500, 1, pockerUsers.size()+1,checkBox,JtextField);
+            pockerUsers.add(playerOfMyDreams);
+            j.setText(playerOfMyDreams.toString());
+            ins.addActionListener(e -> {
+              int temps = Integer.parseInt(JtextField.getText());
+               playerOfMyDreams.setCount(playerOfMyDreams.getCount()+temps);
+                j.setText(playerOfMyDreams.toString());
+                JtextField.setText("");
+
+            });
+
+
+
+        }
+        catch (Exception ed){ed.printStackTrace();}
+            newPlayer.setText("");
+
+
+        }
 
 
     }
