@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Created by Администратор on 27.06.2016.
  */
 public class MainHere {
-      private int numberGame;
+      private static int numberGame;
         // public static MainHere basic;
     private static String s;
     static ArrayList<Pocker> pockerUsers = new ArrayList<>();
@@ -91,15 +91,8 @@ public class MainHere {
            // aScroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
             JButton startGame = new JButton("Start this game");
-            startGame.addActionListener(e -> {try{
-
-
-               DBWorker worker = new DBWorker();
-                Statement statement = worker.getConnection().createStatement();
-                statement.executeUpdate("UPDATE gameis SET gameis = gameis+1");
-                countLabel.setText("Game number is " + ++numberGame);
-
-            }catch (Exception ed){ed.printStackTrace();}
+            startGame.addActionListener(e -> {
+              countLabel.setText(startingNewGame(mainPanel));
 
             });
 
@@ -165,8 +158,24 @@ public class MainHere {
             mainpanel.add(jLabels.get(i));
             mainpanel.add(pockerUsers.get(i).getTextField());
         }
+       }
+   public static String startingNewGame(JPanel mainPanel){
+       try{
+
+           DBWorker worker = new DBWorker();
+           Statement statement = worker.getConnection().createStatement();
+           statement.executeUpdate("UPDATE gameis SET gameis = gameis+1");
 
 
+           for(int i = 0; i < pockerUsers.size(); i++){
+             int tempcount = pockerUsers.get(i).getCount();
+               pockerUsers.get(i).setCount(tempcount - 17);
+           }
+           labelsLoad(mainPanel,pockerUsers,jLabels);
+
+
+       }catch (Exception ed){ed.printStackTrace();}
+       return "Game number is " + ++numberGame;
     }
 
 
