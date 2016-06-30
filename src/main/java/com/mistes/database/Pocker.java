@@ -75,7 +75,7 @@ public class Pocker {
         this.textField = textField;
     }
 
-    public Pocker(String name, int count, int gameNumber, int id, JCheckBox checkBox, JTextField textField) {
+    public Pocker(String name, int count, int gameNumber, int id, JCheckBox checkBox, JTextField textField,JButton button) {
         this.name = name;
         this.count = count;
         this.gameNumber = gameNumber;
