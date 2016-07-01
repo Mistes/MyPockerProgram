@@ -1,5 +1,4 @@
 package com.mistes.database;
-
 import javax.swing.*;
 import java.awt.*;
 import java.sql.PreparedStatement;
@@ -11,15 +10,9 @@ import java.util.ArrayList;
 
 public class MainHere {
     private static int numberGame;
-    // public static MainHere basic;
-    private static int costyl = 1;
-    private static Pocker costylpocker;
-    private static JLabel costyllabel;
     static ArrayList<Pocker> pockerUsers = new ArrayList<>();
 
     static ArrayList<JLabel> jLabels = new ArrayList<>();
-    public static Pocker tempocker;
-
 
     public static void main(String[] args) {
         MainHere king = new MainHere();
@@ -102,44 +95,31 @@ public class MainHere {
         topPanel.add(startGame);
         topPanel.add(countLabel);
 
-        labelsLoad(mainPanel, pockerUsers, jLabels);       //zagr middle
+        labelsLoad(mainPanel);       //zagr middle
 
         // mainPanel.add(aScroller);
         downPanel.add(label);
         downPanel.add(newPlayer);
         downPanel.add(sendButton);
-        //  downPanel.setLayout(new BoxLayout(downPanel,BoxLayout.Y_AXIS));
 
         theFrame.getContentPane().add(BorderLayout.CENTER, mainPanel);
         theFrame.getContentPane().add(BorderLayout.NORTH, topPanel);
         theFrame.getContentPane().add(BorderLayout.SOUTH, downPanel);
 
-
         theFrame.setSize(600, 400);
         theFrame.setVisible(true);
     }
 
-    public static void labelsLoad(JPanel mainpanel, ArrayList<Pocker> list, ArrayList<JLabel> jlabellist) {
+    public static void labelsLoad(JPanel mainpanel) {
         for (int i = 0; i < pockerUsers.size(); i++) {
             JLabel c = new JLabel();
             c.setText(pockerUsers.get(i).toString());
             jLabels.add(c);
             mainpanel.add(pockerUsers.get(i).getCheckBox());
-           /* pockerUsers.get(i).getButton().getActionListeners(e -> {try{
-
-            pockerUsers.get(i)
-
-
-
-            }catch (Exception ed){ed.printStackTrace();}
-
-            });*/
             mainpanel.add(jLabels.get(i));
             mainpanel.add(pockerUsers.get(i).getTextField());
             mainpanel.add(pockerUsers.get(i).getButton());
-            costylpocker = pockerUsers.get(i);
-            costyllabel = jLabels.get(i);
-            buttonGo(costylpocker, costyllabel);
+            buttonGo(pockerUsers.get(i), jLabels.get(i));
 
 
         }
@@ -159,7 +139,6 @@ public class MainHere {
                     pockerUsers.get(i).setCount(tempcount);
                     pockerUsers.get(i).setGameNumber(pockerUsers.get(i).getGameNumber() + 1);
                     jLabels.get(i).setText(pockerUsers.get(i).toString());
-                  //  statement.executeUpdate("UPDATE pocker SET gameNumber = pockerUsers.get(i).getGameNumber() WHERE id = pockerUsers.get(i).getId()");
                     PreparedStatement preparedStatement = worker.getConnection().prepareStatement("UPDATE pocker SET count = ?, gameNumber = ?,checkbox = ? WHERE id =?");
                     preparedStatement.setInt(1,pockerUsers.get(i).getCount());
                     preparedStatement.setInt(2,pockerUsers.get(i).getGameNumber());
@@ -173,9 +152,6 @@ public class MainHere {
                     preparedStatement.setInt(2,pockerUsers.get(i).getId());
                     preparedStatement.execute();
                 }
-
-
-                //statement.executeUpdate("UPDATE pocker SET count = pockerUsers.get(i).getCount()");   need to think how upoad at DataBase
             }
 
 
@@ -220,7 +196,6 @@ public class MainHere {
                 playerOfMyDreams.setCount(playerOfMyDreams.getCount() + temps);
                 j.setText(playerOfMyDreams.toString());
                 JtextField.setText("");
-
             });
 
 
@@ -234,19 +209,18 @@ public class MainHere {
 
     public static void buttonGo(Pocker pocker, JLabel c) {
         pocker.getButton().addActionListener(e -> {
+            int temps = 0;
 
-
-            System.out.println("You clicked a button!1");
-
-            int temps = Integer.parseInt(pocker.getTextField().getText());
+             temps = Integer.parseInt(pocker.getTextField().getText());
             pocker.setCount(pocker.getCount() + temps);
             c.setText(pocker.toString());
             pocker.getTextField().setText("");
+
             try{
             DBWorker worker = new DBWorker();
 
                 PreparedStatement preparedStatement = worker.getConnection().prepareStatement("UPDATE pocker SET count = ? WHERE id =?");
-                preparedStatement.setInt(1,pocker.getCount());
+                preparedStatement.setInt(1, pocker.getCount());
                 preparedStatement.setInt(2, pocker.getId());
                 preparedStatement.execute();}catch (SQLException egs){
                 System.out.println(egs);
