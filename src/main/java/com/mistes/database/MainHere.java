@@ -74,7 +74,7 @@ public class MainHere {
 
         JLabel label = new JLabel("Add new player");
 
-        JLabel countLabel = new JLabel("Game number is " + numberGame);
+        JLabel countLabel = new JLabel("Game number is " + numberGame); //here
 
         //  JScrollPane aScroller = new JScrollPane(testing);
         // aScroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
